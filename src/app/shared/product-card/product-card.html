@@ -1,0 +1,10 @@
+<mat-card class="product-card">
+  <img mat-card-image [src]="product.imageUrl || 'https://placehold.co/400x300?text=NexBuy'" [alt]="product.name" />
+  <mat-card-header>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+    <mat-card-subtitle>{{ product.price | currency }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions>
+    <a mat-button color="primary" [routerLink]="['/products', product.slug]">View</a>
+  </mat-card-actions>
+</mat-card>

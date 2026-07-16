@@ -1,4 +1,7 @@
-<main>
-  <h1>Welcome to {{ title() }}</h1>
-  <router-outlet />
-</main>
+<div class="app-shell">
+  <app-navbar />
+  <main class="content">
+    <router-outlet />
+  </main>
+  <app-footer />
+</div>
