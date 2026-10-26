@@ -6,3 +6,20 @@ img {
   height: 180px;
   object-fit: cover;
 }
+
+.sale-price {
+  margin-right: 0.5rem;
+  font-weight: 600;
+  color: var(--mat-sys-error);
+}
+
+.old-price {
+  color: #777;
+  text-decoration: line-through;
+}
+
+.out-of-stock {
+  margin: 0.5rem 1rem 0;
+  color: var(--mat-sys-error);
+  font-size: 0.875rem;
+}
