@@ -1,9 +1,19 @@
 <mat-card class="product-card">
-  <img mat-card-image [src]="product.imageUrl || 'https://placehold.co/400x300?text=NexBuy'" [alt]="product.name" />
+  <img mat-card-image [src]="imageUrl" [alt]="product.name" (error)="onImageError($event)" />
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>
-    <mat-card-subtitle>{{ product.price | currency }}</mat-card-subtitle>
+    <mat-card-subtitle>
+      @if (onSale) {
+        <span class="sale-price">{{ product.discountedPrice | currency }}</span>
+        <span class="old-price">{{ product.price | currency }}</span>
+      } @else {
+        {{ product.price | currency }}
+      }
+    </mat-card-subtitle>
   </mat-card-header>
+  @if (!product.inStock) {
+    <p class="out-of-stock">Out of stock</p>
+  }
   <mat-card-actions>
     <a mat-button color="primary" [routerLink]="['/products', product.slug]">View</a>
   </mat-card-actions>
