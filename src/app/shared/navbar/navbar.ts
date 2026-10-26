@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,4 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar {}
+export class Navbar {
+  readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
+  logout(): void {
+    this.auth.logout();
+    void this.router.navigate(['/']);
+  }
+}

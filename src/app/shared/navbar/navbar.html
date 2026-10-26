@@ -7,5 +7,11 @@
     <mat-icon>shopping_cart</mat-icon>
     Cart
   </a>
-  <a mat-button routerLink="/auth/login" routerLinkActive="active">Login</a>
+  @if (auth.user(); as user) {
+    <span class="user-name">{{ user.name }}</span>
+    <button mat-button type="button" (click)="logout()">Logout</button>
+  } @else {
+    <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+    <a mat-button routerLink="/register" routerLinkActive="active">Register</a>
+  }
 </mat-toolbar>

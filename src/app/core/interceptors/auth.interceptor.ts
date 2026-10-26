@@ -1,8 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
-/** Placeholder – attach JWT on authenticated requests */
+/** Attach JWT access token to authenticated requests */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('token');
+  const auth = inject(AuthService);
+  const token = auth.getAccessToken();
   if (token) {
     req = req.clone({
       setHeaders: { Authorization: `Bearer ${token}` },
