@@ -5,9 +5,8 @@ import { Router } from '@angular/router';
 import { appConfig } from './app.config';
 import { API_URL, seedSession } from '../testing/shared-test-setup';
 
-/** Day 3 | AC: interceptors registered app-wide | BR: auth interceptor then error interceptor */
+/** Unit tests for appConfig. */
 describe('appConfig', () => {
-  // HIGH
   it('the configured HttpClient attaches the Bearer token', async () => {
     // Arrange
     // real app providers with the HTTP backend swapped for the testing one
@@ -29,7 +28,6 @@ describe('appConfig', () => {
     expect(appConfig.providers.length).toBeGreaterThan(0);
   });
 
-  // HIGH
   it('the configured HttpClient logs out on a 401', async () => {
     // Arrange
     // real app providers with a stubbed navigation

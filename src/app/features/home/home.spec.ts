@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Home } from './home';
 
-/** Day 1 | AC: landing page | BR: welcome text and Browse products link */
+/** Unit tests for Home. */
 describe('Home', () => {
   describe('template', () => {
-    // LOW
     it('renders the welcome heading and a link to the products page', async () => {
       // Arrange
       // router for the link

@@ -4,10 +4,9 @@ import { AuthUser } from '../../core/models/auth.model';
 import { Navbar } from './navbar';
 import { provideAuthStub } from '../../../testing/shared-test-setup';
 
-/** Day 3 | AC: navbar shows account state | BR: name + Logout when signed in, Login/Register otherwise */
+/** Unit tests for Navbar. */
 describe('Navbar', () => {
   describe('template', () => {
-    // MEDIUM
     it('shows Login and Register links when signed out', async () => {
       // Arrange
       // stubbed auth with no user
@@ -27,7 +26,6 @@ describe('Navbar', () => {
       expect(el.querySelector('.brand')?.textContent).toContain('NexBuy');
     });
 
-    // MEDIUM
     it('shows the user\'s name and a Logout button when signed in', async () => {
       // Arrange
       // stubbed auth with a user
@@ -50,7 +48,6 @@ describe('Navbar', () => {
   });
 
   describe('logout', () => {
-    // MEDIUM
     it('logout signs out and navigates home', async () => {
       // Arrange
       // stubbed auth with a user and a navigation spy

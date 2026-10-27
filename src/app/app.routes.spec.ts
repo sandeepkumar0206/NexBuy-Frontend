@@ -3,9 +3,8 @@ import { Home } from './features/home/home';
 import { Login } from './features/auth/login/login';
 import { Register } from './features/auth/register/register';
 
-/** Day 3 | AC: login and register routes | BR: wildcard returns home */
+/** Unit tests for routes. */
 describe('routes', () => {
-  // MEDIUM
   it('maps home, login and register to their components', async () => {
     // Arrange
     // route table
@@ -23,7 +22,6 @@ describe('routes', () => {
     expect(table.length).toBe(4);
   });
 
-  // MEDIUM
   it('unknown paths redirect to the home route', async () => {
     // Arrange
     // route table

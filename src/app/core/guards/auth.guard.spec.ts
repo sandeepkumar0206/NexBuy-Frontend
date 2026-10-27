@@ -3,9 +3,8 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/r
 import { authGuard } from './auth.guard';
 import { seedSession, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 3 | AC: protect routes for signed-in users | BR: redirect to /login with returnUrl */
+/** Unit tests for authGuard. */
 describe('authGuard', () => {
-  // HIGH
   it('allows navigation when the user is signed in', async () => {
     // Arrange
     // stored session
@@ -24,7 +23,6 @@ describe('authGuard', () => {
     expect(localStorage.getItem('token')).toBe('access-1');
   });
 
-  // HIGH
   it('redirects a signed-out user to /login carrying the current URL', async () => {
     // Arrange
     // signed out, currently on /cart

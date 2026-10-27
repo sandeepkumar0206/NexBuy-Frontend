@@ -4,10 +4,9 @@ import { throwError } from 'rxjs';
 import { Login } from './login';
 import { authResponse, provideAuthStub } from '../../../../testing/shared-test-setup';
 
-/** Day 3 | AC: login form with validation, safe redirects, API errors | BR: only local returnUrl, never loop to /login or /register */
+/** Unit tests for Login. */
 describe('Login', () => {
   describe('form', () => {
-    // CRITICAL
     it('the form starts invalid with required errors', async () => {
       // Arrange
       // stubbed auth, signed out
@@ -27,7 +26,6 @@ describe('Login', () => {
       expect((fixture.nativeElement as HTMLElement).textContent).toContain('Log in');
     });
 
-    // CRITICAL
     it('the email control rejects a malformed address', async () => {
       // Arrange
       // stubbed auth
@@ -49,7 +47,6 @@ describe('Login', () => {
   });
 
   describe('submit', () => {
-    // CRITICAL
     it('submit with an invalid form touches the fields and does not call the API', async () => {
       // Arrange
       // stubbed auth and an empty form
@@ -70,7 +67,6 @@ describe('Login', () => {
       expect(navigateByUrl).not.toHaveBeenCalled();
     });
 
-    // CRITICAL
     it('submit logs in with the form values and goes home when there is no returnUrl', async () => {
       // Arrange
       // stubbed auth that succeeds
@@ -92,7 +88,6 @@ describe('Login', () => {
       expect(component.errorMessage()).toBe('');
     });
 
-    // CRITICAL
     it('submit returns to a safe local returnUrl after login', async () => {
       // Arrange
       // stubbed auth that succeeds, returnUrl=/cart
@@ -113,7 +108,6 @@ describe('Login', () => {
       expect(navigateByUrl).not.toHaveBeenCalledWith('/');
     });
 
-    // CRITICAL
     it('submit ignores an external returnUrl', async () => {
       // Arrange
       // stubbed auth that succeeds, returnUrl=//evil.example.com
@@ -134,7 +128,6 @@ describe('Login', () => {
       expect(navigateByUrl).toHaveBeenCalledTimes(1);
     });
 
-    // CRITICAL
     it('submit does not send the user back to /login or /register', async () => {
       // Arrange
       // stubbed auth that succeeds, returnUrl=/login
@@ -155,7 +148,6 @@ describe('Login', () => {
       expect(navigateByUrl).toHaveBeenCalledTimes(1);
     });
 
-    // CRITICAL
     it('submit shows the server\'s message and re-enables the button on failure', async () => {
       // Arrange
       // stubbed auth that rejects
@@ -180,7 +172,6 @@ describe('Login', () => {
       expect(navigateByUrl).not.toHaveBeenCalled();
     });
 
-    // CRITICAL
     it('submit falls back to a generic message when the error has no text', async () => {
       // Arrange
       // stubbed auth that rejects with an empty body
@@ -205,7 +196,6 @@ describe('Login', () => {
   });
 
   describe('ngOnInit', () => {
-    // CRITICAL
     it('ngOnInit redirects an already signed-in user to the returnUrl', async () => {
       // Arrange
       // stubbed auth reporting signed in, returnUrl=/cart
@@ -223,7 +213,6 @@ describe('Login', () => {
       expect(fixture.componentInstance.submitting()).toBe(false);
     });
 
-    // CRITICAL
     it('ngOnInit leaves a signed-out visitor on the page', async () => {
       // Arrange
       // stubbed auth reporting signed out

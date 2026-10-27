@@ -4,10 +4,9 @@ import { throwError } from 'rxjs';
 import { Register } from './register';
 import { provideAuthStub } from '../../../../testing/shared-test-setup';
 
-/** Day 3 | AC: register form with validation, matching passwords, API errors | BR: confirmPassword never sent */
+/** Unit tests for Register. */
 describe('Register', () => {
   describe('form', () => {
-    // CRITICAL
     it('the form starts invalid and flags each field\'s own rule', async () => {
       // Arrange
       // stubbed auth
@@ -28,7 +27,6 @@ describe('Register', () => {
       expect(component.form.controls.password.hasError('minlength')).toBe(true);
     });
 
-    // CRITICAL
     it('a confirmation that differs from the password is flagged', async () => {
       // Arrange
       // stubbed auth
@@ -48,7 +46,6 @@ describe('Register', () => {
       expect(component.form.controls.password.hasError('passwordMismatch')).toBe(false);
     });
 
-    // CRITICAL
     it('a matching confirmation has no mismatch error', async () => {
       // Arrange
       // stubbed auth
@@ -70,7 +67,6 @@ describe('Register', () => {
   });
 
   describe('constructor', () => {
-    // CRITICAL
     it('changing the password re-checks the confirmation', async () => {
       // Arrange
       // matching passwords
@@ -93,7 +89,6 @@ describe('Register', () => {
   });
 
   describe('submit', () => {
-    // CRITICAL
     it('submit with an invalid form touches the fields and does not call the API', async () => {
       // Arrange
       // stubbed auth and an empty form
@@ -114,7 +109,6 @@ describe('Register', () => {
       expect(navigateByUrl).not.toHaveBeenCalled();
     });
 
-    // CRITICAL
     it('submit registers without the confirmation field and goes home', async () => {
       // Arrange
       // stubbed auth that succeeds and a valid form
@@ -136,7 +130,6 @@ describe('Register', () => {
       expect(component.errorMessage()).toBe('');
     });
 
-    // CRITICAL
     it('submit shows the server\'s message and re-enables the button on failure', async () => {
       // Arrange
       // stubbed auth that rejects with a duplicate email
@@ -159,7 +152,6 @@ describe('Register', () => {
       expect(navigateByUrl).not.toHaveBeenCalled();
     });
 
-    // CRITICAL
     it('submit falls back to a generic message when the error has no text', async () => {
       // Arrange
       // stubbed auth that rejects with an empty body
@@ -184,7 +176,6 @@ describe('Register', () => {
   });
 
   describe('ngOnInit', () => {
-    // CRITICAL
     it('ngOnInit redirects an already signed-in user home', async () => {
       // Arrange
       // stubbed auth reporting signed in
@@ -202,7 +193,6 @@ describe('Register', () => {
       expect(fixture.componentInstance.submitting()).toBe(false);
     });
 
-    // CRITICAL
     it('ngOnInit leaves a signed-out visitor on the page', async () => {
       // Arrange
       // stubbed auth reporting signed out

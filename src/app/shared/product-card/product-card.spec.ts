@@ -3,10 +3,9 @@ import { provideRouter } from '@angular/router';
 import { ProductCard } from './product-card';
 import { product } from '../../../testing/shared-test-setup';
 
-/** Day 4 | AC: product card shows price, sale, stock | BR: placeholder image, strike-through when discounted */
+/** Unit tests for ProductCard. */
 describe('ProductCard', () => {
   describe('imageUrl', () => {
-    // MEDIUM
     it('imageUrl is the first image when one exists', async () => {
       // Arrange
       // product with two images
@@ -26,7 +25,6 @@ describe('ProductCard', () => {
       expect(img?.getAttribute('alt')).toBe('Yoga Mat Pro');
     });
 
-    // MEDIUM
     it('imageUrl falls back to the placeholder when there are no images', async () => {
       // Arrange
       // product without images
@@ -48,7 +46,6 @@ describe('ProductCard', () => {
   });
 
   describe('onSale', () => {
-    // MEDIUM
     it('onSale is true only when the discounted price is lower', async () => {
       // Arrange
       // card on a discounted product
@@ -73,7 +70,6 @@ describe('ProductCard', () => {
   });
 
   describe('template', () => {
-    // MEDIUM
     it('a discounted product shows the sale price and a struck-through old price', async () => {
       // Arrange
       // discounted product
@@ -93,7 +89,6 @@ describe('ProductCard', () => {
       expect(el.querySelector('.out-of-stock')).toBeNull();
     });
 
-    // MEDIUM
     it('an out-of-stock product shows the notice', async () => {
       // Arrange
       // product with no stock
@@ -113,7 +108,6 @@ describe('ProductCard', () => {
       expect(el.textContent).toContain('$30.00');
     });
 
-    // MEDIUM
     it('the View link points at the product slug', async () => {
       // Arrange
       // product with slug
@@ -135,7 +129,6 @@ describe('ProductCard', () => {
   });
 
   describe('onImageError', () => {
-    // MEDIUM
     it('onImageError swaps a broken image for the placeholder', async () => {
       // Arrange
       // card and a broken image element

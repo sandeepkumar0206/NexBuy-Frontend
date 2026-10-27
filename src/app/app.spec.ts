@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 
-/** Day 1 | AC: app shell | BR: navbar, routed content, footer */
+/** Unit tests for App. */
 describe('App', () => {
   describe('creation', () => {
     it('should create the app', () => {
@@ -32,7 +32,6 @@ describe('App', () => {
   });
 
   describe('template', () => {
-    // MEDIUM
     it('renders the navbar, the router outlet and the footer in the shell', async () => {
       // Arrange
       // shell with router and HTTP (for the real AuthService)

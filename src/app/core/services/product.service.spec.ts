@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { ProductService } from './product.service';
 import { API_URL, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 4 | AC: product list/search/detail/category calls | BR: unset params omitted, slug encoded */
+/** Unit tests for ProductService. */
 describe('ProductService', () => {
   describe('list', () => {
-    // HIGH
     it('list sends only the query params that are set', async () => {
       // Arrange
       // service on the HTTP testing backend
@@ -28,7 +27,6 @@ describe('ProductService', () => {
       expect(req.request.params.has('size')).toBe(false);
     });
 
-    // HIGH
     it('list keeps zero values', async () => {
       // Arrange
       // service
@@ -48,7 +46,6 @@ describe('ProductService', () => {
       expect(req.request.params.keys().length).toBe(2);
     });
 
-    // HIGH
     it('list without a query sends no params', async () => {
       // Arrange
       // service
@@ -70,7 +67,6 @@ describe('ProductService', () => {
   });
 
   describe('getById', () => {
-    // HIGH
     it('getById requests the product by id', async () => {
       // Arrange
       // service
@@ -93,7 +89,6 @@ describe('ProductService', () => {
   });
 
   describe('search', () => {
-    // HIGH
     it('search sends q with the paging options', async () => {
       // Arrange
       // service
@@ -114,7 +109,6 @@ describe('ProductService', () => {
       expect(req.request.params.has('page')).toBe(false);
     });
 
-    // HIGH
     it('search omits a blank q', async () => {
       // Arrange
       // service
@@ -136,7 +130,6 @@ describe('ProductService', () => {
   });
 
   describe('byCategory', () => {
-    // HIGH
     it('byCategory encodes the slug and forwards the sort', async () => {
       // Arrange
       // service

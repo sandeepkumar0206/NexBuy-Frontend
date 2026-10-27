@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Footer } from './footer';
 
-/** Day 1 | AC: footer with copyright | BR: shows the current year */
+/** Unit tests for Footer. */
 describe('Footer', () => {
   describe('template', () => {
-    // LOW
     it('shows the copyright with the current year and nav links', async () => {
       // Arrange
       // pin the clock to 2031

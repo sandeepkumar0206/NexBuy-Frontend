@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { apiErrorMessage } from './api-error';
 
-/** Day 3 | AC: friendly API error text in forms | BR: first field error, else message, else fallback */
+/** Unit tests for apiErrorMessage. */
 describe('apiErrorMessage', () => {
-  // MEDIUM
   it('returns the fallback for errors that are not HTTP errors', async () => {
     // Arrange
     // three non-HTTP values
@@ -20,7 +19,6 @@ describe('apiErrorMessage', () => {
     expect(new Set(results).size).toBe(1);
   });
 
-  // MEDIUM
   it('reports an unreachable server for status 0', async () => {
     // Arrange
     // network failure
@@ -37,7 +35,6 @@ describe('apiErrorMessage', () => {
     expect(message).toContain('backend');
   });
 
-  // MEDIUM
   it('returns the first string from the validation errors map', async () => {
     // Arrange
     // validation body with two field errors and a general message
@@ -57,7 +54,6 @@ describe('apiErrorMessage', () => {
     expect(message).not.toBe('Fallback');
   });
 
-  // MEDIUM
   it('falls through to the message when the errors map has no usable text', async () => {
     // Arrange
     // errors map with a number and a blank string
@@ -77,7 +73,6 @@ describe('apiErrorMessage', () => {
     expect(message.trim().length).toBeGreaterThan(0);
   });
 
-  // MEDIUM
   it('returns the message field when there is no errors map', async () => {
     // Arrange
     // plain message body
@@ -94,7 +89,6 @@ describe('apiErrorMessage', () => {
     expect(error.status).toBe(400);
   });
 
-  // MEDIUM
   it('returns the fallback when the body has no usable text', async () => {
     // Arrange
     // string body, empty object, blank message

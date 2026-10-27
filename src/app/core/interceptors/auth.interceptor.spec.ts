@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { authInterceptor } from './auth.interceptor';
 import { seedSession, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 2 | AC: attach JWT to API calls | BR: Bearer header only when a token exists */
+/** Unit tests for authInterceptor. */
 describe('authInterceptor', () => {
-  // CRITICAL
   it('adds a Bearer Authorization header when a token is stored', async () => {
     // Arrange
     // stored session and an interceptor-enabled client
@@ -28,7 +27,6 @@ describe('authInterceptor', () => {
     http.verify();
   });
 
-  // CRITICAL
   it('sends the request unchanged when no token is stored', async () => {
     // Arrange
     // signed out and an interceptor-enabled client
@@ -49,7 +47,6 @@ describe('authInterceptor', () => {
     expect(req.request.headers.keys().length).toBe(0);
   });
 
-  // CRITICAL
   it('keeps headers the caller already set', async () => {
     // Arrange
     // stored session and a request with its own header
