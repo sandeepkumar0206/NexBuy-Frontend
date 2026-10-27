@@ -13,6 +13,10 @@ export class ProductService {
     return this.http.get<ProductPage>(this.apiUrl, { params: this.toParams({ ...query }) });
   }
 
+  getFeatured(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/featured`);
+  }
+
   getById(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }

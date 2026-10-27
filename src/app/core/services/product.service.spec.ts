@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ProductService } from './product.service';
-import { API_URL, setupHttp } from '../../../testing/shared-test-setup';
+import { API_URL, product, setupHttp } from '../../../testing/shared-test-setup';
 
 /** Unit tests for ProductService. */
 describe('ProductService', () => {
@@ -63,6 +63,27 @@ describe('ProductService', () => {
       expect(req.request.params.keys().length).toBe(0);
       expect(req.request.urlWithParams).toBe(`${API_URL}/products`);
       expect(req.request.method).toBe('GET');
+    });
+  });
+
+  describe('getFeatured', () => {
+    it('getFeatured requests the featured products and returns the list', async () => {
+      // Arrange
+      // service on the HTTP testing backend
+      const { http } = setupHttp();
+      const service = TestBed.inject(ProductService);
+      let result: unknown;
+
+      // Act
+      // call and answer with two products
+      service.getFeatured().subscribe((products) => (result = products));
+      const req = http.expectOne(`${API_URL}/products/featured`);
+      req.flush([product({ id: 1 }), product({ id: 2 })]);
+
+      // Assert
+      // GET with the list passed through
+      expect(req.request.method).toBe('GET');
+      expect(result).toEqual([product({ id: 1 }), product({ id: 2 })]);
     });
   });
 

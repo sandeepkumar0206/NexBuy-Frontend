@@ -1,5 +1,79 @@
-<section class="home">
-  <h1>Welcome to NexBuy</h1>
-  <p>Your modern e-commerce storefront — shop smarter.</p>
-  <a mat-flat-button color="primary" routerLink="/products">Browse products</a>
-</section>
+<div class="home">
+  <section class="hero">
+    <h1>Welcome to NexBuy</h1>
+    <p>Your modern e-commerce storefront. Shop smarter.</p>
+    <div class="actions">
+      <a mat-flat-button color="primary" routerLink="/products">Shop now</a>
+      @if (!auth.user()) {
+        <a mat-stroked-button routerLink="/register">Create account</a>
+      }
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="categories-title">
+    <h2 id="categories-title">Shop by category</h2>
+    @switch (categoriesState()) {
+      @case ('loading') {
+        <app-loader label="Loading categories..." />
+      }
+      @case ('error') {
+        <p class="message error">
+          Could not load categories.
+          <button mat-button type="button" (click)="loadCategories()">Try again</button>
+        </p>
+      }
+      @default {
+        @if (categories().length === 0) {
+          <p class="message">No categories yet.</p>
+        } @else {
+          <div class="category-grid">
+            @for (category of categories(); track category.id) {
+              <a class="category-link" [routerLink]="['/categories', category.slug]">
+                <mat-card class="category-card">
+                  <mat-card-header>
+                    <mat-card-title>{{ category.name }}</mat-card-title>
+                    @if (category.description) {
+                      <mat-card-subtitle>{{ category.description }}</mat-card-subtitle>
+                    }
+                  </mat-card-header>
+                </mat-card>
+              </a>
+            }
+          </div>
+        }
+      }
+    }
+  </section>
+
+  <section class="section" aria-labelledby="featured-title">
+    <h2 id="featured-title">Featured products</h2>
+    @switch (featuredState()) {
+      @case ('loading') {
+        <app-loader label="Loading products..." />
+      }
+      @case ('error') {
+        <p class="message error">
+          Could not load products.
+          <button mat-button type="button" (click)="loadFeatured()">Try again</button>
+        </p>
+      }
+      @default {
+        @if (featured().length === 0) {
+          <p class="message">No featured products right now. Check back soon.</p>
+        } @else {
+          <div class="product-grid">
+            @for (product of featured(); track product.id) {
+              <app-product-card [product]="product" />
+            }
+          </div>
+        }
+      }
+    }
+  </section>
+
+  <section class="promo">
+    <h2>New arrivals, every week</h2>
+    <p>See everything we have in the full catalog.</p>
+    <a mat-flat-button routerLink="/products">Browse all products</a>
+  </section>
+</div>
