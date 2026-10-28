@@ -1,9 +1,8 @@
 import { API_URL, authResponse, seedSession, setupAuthService } from '../../../testing/shared-test-setup';
 
-/** Day 3 | AC: register/login/refresh/logout with persisted session | BR: tokens + user in localStorage, user signal in sync */
+/** Unit tests for AuthService. */
 describe('AuthService', () => {
   describe('register', () => {
-    // CRITICAL
     it('register posts the payload and persists the returned session', async () => {
       // Arrange
       // signed-out service on the HTTP testing backend
@@ -26,7 +25,6 @@ describe('AuthService', () => {
       http.verify();
     });
 
-    // CRITICAL
     it('register leaves the session empty when the server rejects it', async () => {
       // Arrange
       // signed-out service
@@ -50,7 +48,6 @@ describe('AuthService', () => {
   });
 
   describe('login', () => {
-    // CRITICAL
     it('login posts the credentials and persists the returned session', async () => {
       // Arrange
       // signed-out service
@@ -72,7 +69,6 @@ describe('AuthService', () => {
       expect(JSON.parse(localStorage.getItem('authUser') as string)).toEqual(auth.user());
     });
 
-    // CRITICAL
     it('login leaves the session empty when the credentials are wrong', async () => {
       // Arrange
       // signed-out service
@@ -94,7 +90,6 @@ describe('AuthService', () => {
   });
 
   describe('refresh', () => {
-    // CRITICAL
     it('refresh sends the stored refresh token and replaces the stored tokens', async () => {
       // Arrange
       // signed-in service
@@ -116,7 +111,6 @@ describe('AuthService', () => {
       expect(auth.getAccessToken()).toBe('access-2');
     });
 
-    // CRITICAL
     it('refresh sends a null token when none is stored', async () => {
       // Arrange
       // signed-out service
@@ -137,7 +131,6 @@ describe('AuthService', () => {
   });
 
   describe('logout', () => {
-    // CRITICAL
     it('logout clears all stored session data and the user signal', async () => {
       // Arrange
       // signed-in service
@@ -159,7 +152,6 @@ describe('AuthService', () => {
   });
 
   describe('getAccessToken', () => {
-    // CRITICAL
     it('getAccessToken returns the stored token', async () => {
       // Arrange
       // signed-in service
@@ -177,7 +169,6 @@ describe('AuthService', () => {
       expect(typeof token).toBe('string');
     });
 
-    // CRITICAL
     it('getAccessToken returns null when signed out', async () => {
       // Arrange
       // signed-out service
@@ -196,7 +187,6 @@ describe('AuthService', () => {
   });
 
   describe('isLoggedIn', () => {
-    // CRITICAL
     it('isLoggedIn is true when an access token is stored', async () => {
       // Arrange
       // signed-in service
@@ -214,7 +204,6 @@ describe('AuthService', () => {
       expect(auth.user()).not.toBeNull();
     });
 
-    // CRITICAL
     it('isLoggedIn is false when no access token is stored', async () => {
       // Arrange
       // signed-out service
@@ -233,7 +222,6 @@ describe('AuthService', () => {
   });
 
   describe('hasRole', () => {
-    // CRITICAL
     it('hasRole matches the signed-in user\'s role only', async () => {
       // Arrange
       // signed-in regular user
@@ -252,7 +240,6 @@ describe('AuthService', () => {
       expect(auth.user()?.role).toBe('USER');
     });
 
-    // CRITICAL
     it('hasRole is false when signed out', async () => {
       // Arrange
       // signed-out service
@@ -272,7 +259,6 @@ describe('AuthService', () => {
   });
 
   describe('constructor', () => {
-    // CRITICAL
     it('the service restores the user from storage on creation', async () => {
       // Arrange
       // stored admin session before the service exists
@@ -289,7 +275,6 @@ describe('AuthService', () => {
       expect(auth.isLoggedIn()).toBe(true);
     });
 
-    // CRITICAL
     it('the service ignores a corrupt stored user', async () => {
       // Arrange
       // invalid JSON in storage

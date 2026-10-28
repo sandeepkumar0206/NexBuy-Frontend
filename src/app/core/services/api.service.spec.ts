@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { ApiService } from './api.service';
 import { API_URL, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 1 | AC: base API wrapper | BR: all paths relative to environment.apiUrl */
+/** Unit tests for ApiService. */
 describe('ApiService', () => {
   describe('get', () => {
-    // LOW
     it('get prefixes the path with the API base URL and returns the body', async () => {
       // Arrange
       // service on the HTTP testing backend
@@ -29,7 +28,6 @@ describe('ApiService', () => {
   });
 
   describe('baseUrl', () => {
-    // LOW
     it('baseUrl mirrors the environment API URL', async () => {
       // Arrange
       // service

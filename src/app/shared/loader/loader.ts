@@ -8,6 +8,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './loader.scss',
 })
 export class Loader {
-  @Input() label = 'Loading…';
+  @Input() label = 'Loading...';
   @Input() diameter = 40;
 }

@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { ProductService } from './product.service';
-import { API_URL, setupHttp } from '../../../testing/shared-test-setup';
+import { API_URL, product, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 4 | AC: product list/search/detail/category calls | BR: unset params omitted, slug encoded */
+/** Unit tests for ProductService. */
 describe('ProductService', () => {
   describe('list', () => {
-    // HIGH
     it('list sends only the query params that are set', async () => {
       // Arrange
       // service on the HTTP testing backend
@@ -28,7 +27,6 @@ describe('ProductService', () => {
       expect(req.request.params.has('size')).toBe(false);
     });
 
-    // HIGH
     it('list keeps zero values', async () => {
       // Arrange
       // service
@@ -48,7 +46,6 @@ describe('ProductService', () => {
       expect(req.request.params.keys().length).toBe(2);
     });
 
-    // HIGH
     it('list without a query sends no params', async () => {
       // Arrange
       // service
@@ -69,8 +66,58 @@ describe('ProductService', () => {
     });
   });
 
+  describe('getFeatured', () => {
+    it('getFeatured requests the featured products and returns the list', async () => {
+      // Arrange
+      // service on the HTTP testing backend
+      const { http } = setupHttp();
+      const service = TestBed.inject(ProductService);
+      let result: unknown;
+
+      // Act
+      // call and answer with two products
+      service.getFeatured().subscribe((products) => (result = products));
+      const req = http.expectOne(`${API_URL}/products/featured`);
+      req.flush([product({ id: 1 }), product({ id: 2 })]);
+
+      // Assert
+      // GET with the list passed through
+      expect(req.request.method).toBe('GET');
+      expect(result).toEqual([product({ id: 1 }), product({ id: 2 })]);
+    });
+  });
+
+  describe('getBySlug', () => {
+    it('getBySlug requests the product by slug', async () => {
+      // Arrange
+      const { http } = setupHttp();
+      const service = TestBed.inject(ProductService);
+      let body: unknown;
+
+      // Act
+      service.getBySlug('yoga-mat-pro').subscribe((value) => (body = value));
+      const req = http.expectOne(`${API_URL}/products/slug/yoga-mat-pro`);
+      req.flush(product());
+
+      // Assert
+      expect(req.request.method).toBe('GET');
+      expect(body).toEqual(product());
+    });
+
+    it('getBySlug encodes the slug', async () => {
+      // Arrange
+      const { http } = setupHttp();
+      const service = TestBed.inject(ProductService);
+
+      // Act
+      service.getBySlug('a b/c').subscribe();
+
+      // Assert
+      http.expectOne(`${API_URL}/products/slug/a%20b%2Fc`).flush({});
+    });
+  });
+
   describe('getById', () => {
-    // HIGH
     it('getById requests the product by id', async () => {
       // Arrange
       // service
@@ -93,7 +140,6 @@ describe('ProductService', () => {
   });
 
   describe('search', () => {
-    // HIGH
     it('search sends q with the paging options', async () => {
       // Arrange
       // service
@@ -114,7 +160,6 @@ describe('ProductService', () => {
       expect(req.request.params.has('page')).toBe(false);
     });
 
-    // HIGH
     it('search omits a blank q', async () => {
       // Arrange
       // service
@@ -136,7 +181,6 @@ describe('ProductService', () => {
   });
 
   describe('byCategory', () => {
-    // HIGH
     it('byCategory encodes the slug and forwards the sort', async () => {
       // Arrange
       // service

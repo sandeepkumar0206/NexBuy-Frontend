@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Loader } from './loader';
 
-/** Day 4 | AC: loading indicator | BR: label and diameter inputs */
+/** Unit tests for Loader. */
 describe('Loader', () => {
   describe('template', () => {
-    // LOW
     it('renders a status region with the default label and a spinner', async () => {
       // Arrange
       // nothing to configure
@@ -26,7 +25,6 @@ describe('Loader', () => {
   });
 
   describe('inputs', () => {
-    // LOW
     it('shows a custom label and diameter', async () => {
       // Arrange
       // loader with inputs

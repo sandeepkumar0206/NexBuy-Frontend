@@ -1,0 +1,62 @@
+<section class="products-page">
+  <header class="header">
+    <div>
+      <h1>All products</h1>
+      @if (range()) {
+        <p class="range">Showing {{ range() }}</p>
+      }
+    </div>
+    <mat-form-field appearance="outline" class="sort">
+      <mat-label>Sort by</mat-label>
+      <mat-select [value]="query().sort" (selectionChange)="onSortChange($event.value)">
+        @for (option of sortOptions; track option.value) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </header>
+
+  @switch (state()) {
+    @case ('loading') {
+      <div class="grid" aria-busy="true" aria-label="Loading products">
+        @for (n of skeletons; track n) {
+          <div class="skeleton"></div>
+        }
+      </div>
+    }
+    @case ('error') {
+      <p class="message error">
+        Could not load products.
+        <button mat-button type="button" (click)="retry()">Try again</button>
+      </p>
+    }
+    @default {
+      @if (result(); as page) {
+        @if (page.totalElements === 0) {
+          <p class="message">No products found.</p>
+        } @else if (pastEnd()) {
+          <p class="message">
+            There are no products on this page.
+            <button mat-button type="button" (click)="goToFirstPage()">Go to the first page</button>
+          </p>
+        } @else {
+          <div class="grid">
+            @for (product of page.content; track product.id) {
+              <app-product-card [product]="product" />
+            }
+          </div>
+        }
+        @if (page.totalElements > 0) {
+          <mat-paginator
+            [length]="page.totalElements"
+            [pageIndex]="query().page - 1"
+            [pageSize]="query().size"
+            [pageSizeOptions]="pageSizes"
+            showFirstLastButtons
+            (page)="onPage($event)"
+          />
+        }
+      }
+    }
+  }
+</section>

@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { CategoryService } from './category.service';
 import { API_URL, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 4 | AC: category list and detail calls | BR: slug encoded */
+/** Unit tests for CategoryService. */
 describe('CategoryService', () => {
   describe('list', () => {
-    // MEDIUM
     it('list requests every category', async () => {
       // Arrange
       // service
@@ -29,7 +28,6 @@ describe('CategoryService', () => {
   });
 
   describe('getBySlug', () => {
-    // MEDIUM
     it('getBySlug encodes the slug', async () => {
       // Arrange
       // service

@@ -3,9 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { errorInterceptor } from './error.interceptor';
 import { API_URL, seedSession, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 3 | AC: expired sessions go to login, forbidden go home | BR: auth endpoints exempt, no redirect loops */
+/** Unit tests for errorInterceptor. */
 describe('errorInterceptor', () => {
-  // HIGH
   it('a 401 logs the user out and redirects to /login with the current URL', async () => {
     // Arrange
     // signed in, viewing /cart
@@ -30,7 +29,6 @@ describe('errorInterceptor', () => {
     expect(failure?.status).toBe(401);
   });
 
-  // HIGH
   it('a 401 from an /api/auth/ endpoint is passed through without logout or redirect', async () => {
     // Arrange
     // signed in; the login call itself fails
@@ -53,7 +51,6 @@ describe('errorInterceptor', () => {
     expect(failure?.status).toBe(401);
   });
 
-  // HIGH
   it('a 401 while already on /login logs out but does not redirect again', async () => {
     // Arrange
     // signed in, already on /login
@@ -77,7 +74,6 @@ describe('errorInterceptor', () => {
     expect(failure?.status).toBe(401);
   });
 
-  // HIGH
   it('a 403 sends the user home and keeps the session', async () => {
     // Arrange
     // signed in, viewing /cart
@@ -101,7 +97,6 @@ describe('errorInterceptor', () => {
     expect(failure?.status).toBe(403);
   });
 
-  // HIGH
   it('a 403 while on /login does not redirect', async () => {
     // Arrange
     // on /login
@@ -124,7 +119,6 @@ describe('errorInterceptor', () => {
     expect(router.url).toBe('/login');
   });
 
-  // HIGH
   it('other errors are rethrown without side effects', async () => {
     // Arrange
     // signed in
@@ -147,7 +141,6 @@ describe('errorInterceptor', () => {
     expect(localStorage.getItem('token')).toBe('access-1');
   });
 
-  // HIGH
   it('successful responses pass through untouched', async () => {
     // Arrange
     // signed in

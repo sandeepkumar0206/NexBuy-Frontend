@@ -1,0 +1,103 @@
+<section class="detail-page">
+  @switch (state()) {
+    @case ('loading') {
+      <app-loader label="Loading product..." />
+    }
+    @case ('notFound') {
+      <div class="message">
+        <h1>Product not found</h1>
+        <p>This product does not exist or is no longer available.</p>
+        <a mat-flat-button color="primary" routerLink="/products">Back to products</a>
+      </div>
+    }
+    @case ('error') {
+      <p class="message error">
+        Could not load this product.
+        <button mat-button type="button" (click)="retry()">Try again</button>
+      </p>
+    }
+    @default {
+      @if (product(); as p) {
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a routerLink="/">Home</a>
+          @if (p.category; as category) {
+            <span class="sep">/</span>
+            <a [routerLink]="['/categories', category.slug]">{{ category.name }}</a>
+          }
+          <span class="sep">/</span>
+          <span aria-current="page">{{ p.name }}</span>
+        </nav>
+
+        <div class="layout">
+          <div class="gallery">
+            <img class="main-image" [src]="mainImage()" [alt]="p.name" (error)="onImageError($event)" />
+            @if (hasGallery()) {
+              <div class="thumbs">
+                @for (image of images(); track $index) {
+                  <button
+                    type="button"
+                    class="thumb"
+                    [class.selected]="$index === selectedIndex()"
+                    [attr.aria-label]="'Show image ' + ($index + 1)"
+                    [attr.aria-pressed]="$index === selectedIndex()"
+                    (click)="selectImage($index)"
+                  >
+                    <img [src]="image" alt="" (error)="onImageError($event)" />
+                  </button>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="info">
+            <h1>{{ p.name }}</h1>
+
+            <p class="price">
+              @if (onSale()) {
+                <span class="sale-price">{{ p.discountedPrice | currency }}</span>
+                <span class="old-price">{{ p.price | currency }}</span>
+              } @else {
+                {{ p.price | currency }}
+              }
+            </p>
+
+            @if (p.inStock) {
+              <span class="badge in-stock">In stock</span>
+            } @else {
+              <span class="badge out-of-stock">Out of stock</span>
+            }
+
+            @if (p.description) {
+              <p class="description">{{ p.description }}</p>
+            }
+
+            <div class="quantity" role="group" aria-label="Quantity">
+              <button
+                mat-icon-button
+                type="button"
+                aria-label="Decrease quantity"
+                [disabled]="!p.inStock || quantity() <= 1"
+                (click)="decrease()"
+              >
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity-value" aria-live="polite">{{ quantity() }}</span>
+              <button
+                mat-icon-button
+                type="button"
+                aria-label="Increase quantity"
+                [disabled]="!p.inStock || quantity() >= maxQuantity()"
+                (click)="increase()"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <button mat-flat-button color="primary" type="button" class="add-to-cart" disabled>Add to cart</button>
+            <p class="hint">The cart is coming soon.</p>
+          </div>
+        </div>
+      }
+    }
+  }
+</section>

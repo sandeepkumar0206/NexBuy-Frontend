@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Product } from '../../core/models/product.model';
 
-const PLACEHOLDER_IMAGE = 'https://placehold.co/400x300?text=NexBuy';
+export const PLACEHOLDER_IMAGE = 'https://placehold.co/400x300?text=NexBuy';
 
 @Component({
   selector: 'app-product-card',

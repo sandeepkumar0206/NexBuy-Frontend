@@ -3,9 +3,8 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/r
 import { adminGuard } from './admin.guard';
 import { seedSession, setupHttp } from '../../../testing/shared-test-setup';
 
-/** Day 3 | AC: protect admin routes | BR: login first, then ADMIN role required */
+/** Unit tests for adminGuard. */
 describe('adminGuard', () => {
-  // HIGH
   it('allows an admin through', async () => {
     // Arrange
     // stored admin session
@@ -24,7 +23,6 @@ describe('adminGuard', () => {
     expect(localStorage.getItem('authUser')).toContain('ADMIN');
   });
 
-  // HIGH
   it('sends a signed-out visitor to /login with the current URL', async () => {
     // Arrange
     // signed out, currently on /admin
@@ -43,7 +41,6 @@ describe('adminGuard', () => {
     expect(router.url).toBe('/admin');
   });
 
-  // HIGH
   it('sends a signed-in non-admin home', async () => {
     // Arrange
     // regular user session
