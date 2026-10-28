@@ -87,6 +87,36 @@ describe('ProductService', () => {
     });
   });
 
+  describe('getBySlug', () => {
+    it('getBySlug requests the product by slug', async () => {
+      // Arrange
+      const { http } = setupHttp();
+      const service = TestBed.inject(ProductService);
+      let body: unknown;
+
+      // Act
+      service.getBySlug('yoga-mat-pro').subscribe((value) => (body = value));
+      const req = http.expectOne(`${API_URL}/products/slug/yoga-mat-pro`);
+      req.flush(product());
+
+      // Assert
+      expect(req.request.method).toBe('GET');
+      expect(body).toEqual(product());
+    });
+
+    it('getBySlug encodes the slug', async () => {
+      // Arrange
+      const { http } = setupHttp();
+      const service = TestBed.inject(ProductService);
+
+      // Act
+      service.getBySlug('a b/c').subscribe();
+
+      // Assert
+      http.expectOne(`${API_URL}/products/slug/a%20b%2Fc`).flush({});
+    });
+  });
+
   describe('getById', () => {
     it('getById requests the product by id', async () => {
       // Arrange

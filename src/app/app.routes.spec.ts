@@ -4,6 +4,7 @@ import { Login } from './features/auth/login/login';
 import { Register } from './features/auth/register/register';
 import { PRODUCT_ROUTES } from './features/products/products.routes';
 import { ProductList } from './features/products/product-list/product-list';
+import { ProductDetail } from './features/products/product-detail/product-detail';
 
 /** Unit tests for routes. */
 describe('routes', () => {
@@ -42,6 +43,17 @@ describe('routes', () => {
 
     // Assert
     expect(component).toBe(ProductList);
+  });
+
+  it('opens the product detail at /products/:slug', async () => {
+    // Arrange
+    const detailRoute = PRODUCT_ROUTES.find((r) => r.path === ':slug');
+
+    // Act
+    const component = await (detailRoute?.loadComponent as () => Promise<unknown>)();
+
+    // Assert
+    expect(component).toBe(ProductDetail);
   });
 
   it('unknown paths redirect to the home route', async () => {
