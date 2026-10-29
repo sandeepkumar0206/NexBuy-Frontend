@@ -3,6 +3,33 @@
   <span class="spacer"></span>
   <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
   <a mat-button routerLink="/products" routerLinkActive="active">Products</a>
+  <button
+    mat-button
+    type="button"
+    class="categories-trigger"
+    [matMenuTriggerFor]="categoryMenu"
+    (menuOpened)="loadCategories()"
+  >
+    Categories
+    <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #categoryMenu="matMenu" class="category-menu">
+    @switch (categoriesState()) {
+      @case ('error') {
+        <span class="menu-note error" mat-menu-item disabled>Could not load. Close and reopen to try again.</span>
+      }
+      @case ('ready') {
+        @for (category of categories(); track category.id) {
+          <a mat-menu-item [routerLink]="['/categories', category.slug]">{{ category.name }}</a>
+        } @empty {
+          <span class="menu-note" mat-menu-item disabled>No categories yet</span>
+        }
+      }
+      @default {
+        <span class="menu-note" mat-menu-item disabled>Loading...</span>
+      }
+    }
+  </mat-menu>
   <a mat-button routerLink="/cart" routerLinkActive="active">
     <mat-icon>shopping_cart</mat-icon>
     Cart

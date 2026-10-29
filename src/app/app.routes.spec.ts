@@ -5,6 +5,8 @@ import { Register } from './features/auth/register/register';
 import { PRODUCT_ROUTES } from './features/products/products.routes';
 import { ProductList } from './features/products/product-list/product-list';
 import { ProductDetail } from './features/products/product-detail/product-detail';
+import { CATEGORY_ROUTES } from './features/categories/categories.routes';
+import { CategoryProducts } from './features/categories/category-products/category-products';
 
 /** Unit tests for routes. */
 describe('routes', () => {
@@ -19,7 +21,22 @@ describe('routes', () => {
     expect(byPath.get('')?.component).toBe(Home);
     expect(byPath.get('login')?.component).toBe(Login);
     expect(byPath.get('register')?.component).toBe(Register);
-    expect(table.length).toBe(5);
+    expect(table.length).toBe(6);
+  });
+
+  it('loads the category routes on demand and opens the category page at /categories/:slug', async () => {
+    // Arrange
+    const categories = routes.find((r) => r.path === 'categories');
+
+    // Act
+    const loaded = await categories?.loadChildren?.();
+    const slugRoute = CATEGORY_ROUTES.find((r) => r.path === ':slug');
+    const component = await (slugRoute?.loadComponent as () => Promise<unknown>)();
+
+    // Assert
+    expect(categories?.component).toBeUndefined();
+    expect(loaded).toBe(CATEGORY_ROUTES);
+    expect(component).toBe(CategoryProducts);
   });
 
   it('loads the products routes on demand', async () => {
